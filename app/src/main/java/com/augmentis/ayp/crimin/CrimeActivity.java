@@ -1,13 +1,10 @@
 package com.augmentis.ayp.crimin;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
-public class CrimeActivity extends AppCompatActivity {
-
+public class CrimeActivity extends SingleFragmentActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crime);
+    protected Fragment onCreateFragment() {
+        return new CrimeFragment();
     }
 }
