@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 public abstract class SingleFragmentActivity extends FragmentActivity {
 
-protected static final String TAG = "augmentist-ayp";
+//protected static final String TAG = "augmentist-ayp";
 
 
 
@@ -17,7 +17,7 @@ protected static final String TAG = "augmentist-ayp";
         setContentView(R.layout.activity_crime);
 
 
-        Log.d(TAG, "On create activity");
+        Log.d(CrimeListFragment.TAG, "On create activity");
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment f = fm.findFragmentById(R.id.fragment_container);
@@ -30,11 +30,11 @@ protected static final String TAG = "augmentist-ayp";
             fm.beginTransaction().add(R.id.fragment_container, f)
                     .commit();
 
-            Log.d(TAG, "Fragment is creatd");
+            Log.d(CrimeListFragment.TAG, "Fragment is creatd");
 
         } else {
 
-            Log.d(TAG, "Fagment have already beencreated");
+            Log.d(CrimeListFragment.TAG, "Fagment have already beencreated");
 
         }
     }
