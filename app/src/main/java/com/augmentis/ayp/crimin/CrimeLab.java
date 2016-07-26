@@ -1,5 +1,7 @@
 package com.augmentis.ayp.crimin;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +15,7 @@ public class CrimeLab {
 
     private static CrimeLab instance;
 
-    public static CrimeLab getInstance() {
+    public static CrimeLab getInstance(Context context) {
         if(instance == null){
             instance = new CrimeLab();
 
@@ -50,14 +52,38 @@ public class CrimeLab {
         }
         return null;
     }
+
+    public int getCrimePositionById(UUID uuid) {
+        int size = crimeList.size();
+        for (int i = 0; i < size; i++) {
+            if (crimeList.get(i).getId().equals(uuid)) {
+                return i;
+
+            }
+        }
+
+        return -1;
+
+    }
+
+
+
+
+
+
+
+
+
     public  List<Crime> getCrime() {
         return this.crimeList;
     }
 
 
+
+
     public static void main(String[] args){
 //        CrimeLab crimeLab = CrimeLab.getInstance();
-        List<Crime> crimeList = CrimeLab.getInstance().getCrime();
+        List<Crime> crimeList = CrimeLab.getInstance(null).getCrime();
         int size = crimeList.size();
         for(int i = 0; i< size;i++){
             System.out.println(crimeList.get(i));

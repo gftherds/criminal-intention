@@ -13,10 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by Therdsak on 7/18/2016.
@@ -29,12 +27,13 @@ public class CrimeListFragment extends Fragment {
     private CrimeAdapter _adapter;
 
     protected static final String TAG = "CRIME_LIST";
-    private int crimePos;
+    private Integer[] crimePos;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_crime_list, container, false);
+       View v = inflater.inflate(R.layout.fragment_crime_list, container, false);
+
 
         _crimeRecyelerView = (RecyclerView) v.findViewById(R.id.crime_recycler_view);
         _crimeRecyelerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -50,17 +49,20 @@ public class CrimeListFragment extends Fragment {
      */
 
     private void updateUI() {
-        CrimeLab crimeLab = CrimeLab.getInstance();
+        CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
         List<Crime> crimes = crimeLab.getCrime();
 
         if (_adapter == null) {
-
             _adapter = new CrimeAdapter(crimes);
             _crimeRecyelerView.setAdapter(_adapter);
         } else {
-//                _adapter.notifyDataSetChanged();
-            _adapter.notifyItemChanged(crimePos);
-            Log.d(TAG, "" + crimePos);
+//          _adapter.notifyDataSetChanged();
+            if(crimePos != null) {
+                for (Integer pos : crimePos){
+                    _adapter.notifyItemChanged(pos);
+                Log.d(TAG, "" + crimePos);
+            }
+            }
         }
     }
 
@@ -81,8 +83,8 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_UPDATE_CRIME) {
-            if (requestCode == Activity.RESULT_OK){
-                    crimePos = (int) data.getExtras().get("position");
+            if (resultCode == Activity.RESULT_OK){
+                    crimePos = (Integer[]) data.getExtras().get("position");
                 Log.d(TAG, "get crimePos = " + crimePos);
                 }
 
@@ -130,7 +132,7 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
 //            Toast.makeText(getActivity(), "Press ! " + titleTextView.getText(), Toast.LENGTH_SHORT).show();
             Log.d(TAG, "send position : " + _position);
-            Intent intent = CrimeActivity.newIntent(getActivity(), _crime.getId(), _position);
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), _crime.getId(), _position);
             startActivityForResult(intent, REQUEST_UPDATE_CRIME);
         }
     }
@@ -165,7 +167,9 @@ public class CrimeListFragment extends Fragment {
 
 
         @Override
-        public int getItemCount() {
+        public int getItemCount()
+        {
+
             return _crimes.size();
         }
     }

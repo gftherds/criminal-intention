@@ -31,6 +31,7 @@ public class CrimeFragment extends Fragment {
     private int positon;
 
 
+
     private Button   crimeDateButton;
     private CheckBox crimeSloveCheckbox;
     private EditText editText;
@@ -52,14 +53,14 @@ public class CrimeFragment extends Fragment {
     }
 
     @Override
-    public void onCreate( Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
         UUID crimeId =  (UUID) getArguments().getSerializable(CRIME_ID);
         positon = (int) getArguments().getInt(CRIME_POSITION);
 
-        crime = CrimeLab.getInstance().getCrimeById(crimeId);
+        crime = CrimeLab.getInstance(getActivity()).getCrimeById(crimeId);
 
         Log.d(CrimeListFragment.TAG, "crime.getTitle()=" + crime.getTitle());
 
@@ -87,6 +88,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 crime.setTitle(s.toString());
+                addThisPositionToResult(positon);
 
             }
 
@@ -110,6 +112,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 crime.setSolve(isChecked);
+                addThisPositionToResult(positon);
                 Log.d(CrimeListFragment.TAG, "Crime:" + crime.toString());
             }
         });
@@ -125,6 +128,12 @@ public class CrimeFragment extends Fragment {
         return v;
 
     }
+
+   private void addThisPositionToResult(int position){
+       if(getActivity() instanceof  CrimePagerActivity){
+           ((CrimePagerActivity) getActivity()) .addPageUpdate(positon);
+       }
+   }
 
 
 
