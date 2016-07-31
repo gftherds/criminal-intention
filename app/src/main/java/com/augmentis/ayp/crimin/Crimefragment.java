@@ -3,8 +3,8 @@ package com.augmentis.ayp.crimin;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -25,16 +26,23 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
     private static final String CRIME_ID =  "CrimeFragment.CRIME_ID";
     private static final String CRIME_POSITION =  "CrimeFragment.CRIME_POS";
+    private static final String DIALOG_DATE= "CrimeFragment.CRIME_DATE";
+    private static final int REQUEST_DATE = 123234;
+    private static final int REQUEST_TIME = 123456;
+    private static final String DIALOG_TIME ="CrimeFragment.CRIME_TIME";
 
 
     private Crime crime;
-    private int positon;
 
 
 
+    private Button   crimeTimeButton;
     private Button   crimeDateButton;
     private CheckBox crimeSloveCheckbox;
     private EditText editText;
+    private Button   deleteButton;
+
+
 
     public CrimeFragment(){
 
@@ -58,7 +66,7 @@ public class CrimeFragment extends Fragment {
 
 
         UUID crimeId =  (UUID) getArguments().getSerializable(CRIME_ID);
-        positon = (int) getArguments().getInt(CRIME_POSITION);
+
 
         crime = CrimeLab.getInstance(getActivity()).getCrimeById(crimeId);
 
@@ -88,7 +96,6 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 crime.setTitle(s.toString());
-                addThisPositionToResult(positon);
 
             }
 
@@ -100,9 +107,47 @@ public class CrimeFragment extends Fragment {
 
         crimeDateButton = (Button) v.findViewById(R.id.crime_date);
         crimeDateButton.setText(new SimpleDateFormat("dd MMMM yyyy").format(crime.getCrimeDate()));
-        crimeDateButton.setEnabled(false);
+        crimeDateButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                DatePickerFragment diaglogFragment = DatePickerFragment.newInstance(crime.getCrimeDate());
+
+                diaglogFragment.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
+                diaglogFragment.show(fm, DIALOG_DATE);
 
 
+            }
+
+        });
+
+
+        crimeTimeButton = (Button) v.findViewById(R.id.crime_button);
+        crimeTimeButton.setText(getFormattedTime(crime.getCrimeDate()));
+        crimeTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                TimePickerFragment dialogFragment = TimePickerFragment.newInstance(crime.getCrimeDate());
+                dialogFragment.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
+                dialogFragment.show(fm, DIALOG_TIME);
+             }
+        });
+
+
+        deleteButton = (Button) v.findViewById(R.id.crime_delete);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               CrimeLab crimeLab =  CrimeLab.getInstance(getActivity());
+                crimeLab.getCrime().remove(crimeLab.getCrimeById(crime.getId()));
+//                getActivity().finish();
+            Intent intent = new Intent(getActivity(),CrimeListActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
 
 
@@ -112,15 +157,13 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 crime.setSolve(isChecked);
-                addThisPositionToResult(positon);
+
                 Log.d(CrimeListFragment.TAG, "Crime:" + crime.toString());
             }
         });
 
 
         Intent intent = new Intent();
-        intent.putExtra("position", positon);
-        Log.d(CrimeListFragment.TAG,"Send position back" + positon);
         getActivity().setResult(Activity.RESULT_OK, intent);
 
 
@@ -129,17 +172,42 @@ public class CrimeFragment extends Fragment {
 
     }
 
-   private void addThisPositionToResult(int position){
-       if(getActivity() instanceof  CrimePagerActivity){
-           ((CrimePagerActivity) getActivity()) .addPageUpdate(positon);
-       }
-   }
 
 
 
-//    private String getFormattedDate(Date date){
-//        return new SimpleDateFormat("dd MMMM yyyy").format(date);
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != Activity.RESULT_OK){
+            return;
+        }
+        if(requestCode == REQUEST_DATE){
+            Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+
+
+                    crime.setCrimeDate(date);
+                    crimeDateButton.setText(getFormattedDate(crime.getCrimeDate()));
+
+        }
+        if(requestCode == REQUEST_TIME){
+            Date date = (Date)data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+
+
+            crime.setCrimeDate(date);
+            crimeTimeButton.setText(getFormattedTime(crime.getCrimeDate()));
+
+        }
+    }
+
+
+
+
+
+        private String getFormattedDate(Date date){
+        return new SimpleDateFormat("dd MMMM yyyy").format(date);
+    }
+    private String getFormattedTime(Date date){
+        return new SimpleDateFormat("hh:mm").format(date);
+    }
 
 
 
