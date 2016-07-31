@@ -33,10 +33,10 @@
         android:id="@+id/list_item_crime_date_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/list_item_crime_solved_check_box"
-        android:layout_below="@id/list_item_crime_title_text_view"
         android:padding="12dp"
         tools:text="Crime date"
-        />
+        android:layout_below="@+id/list_item_crime_solved_check_box"
+        android:layout_toRightOf="@+id/list_item_crime_solved_check_box"
+        android:layout_toEndOf="@+id/list_item_crime_solved_check_box" />
 
 </RelativeLayout>

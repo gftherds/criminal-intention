@@ -24,15 +24,32 @@
         android:id="@+id/crime_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:text="Date" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/crime_button"
+        android:text="Time"
         />
+
+
     <CheckBox
         android:id="@+id/crime_slove"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="@string/crime_solve_label"
+        android:layout_alignParentLeft="true"
+        />
+
+
+
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:text="@string/crime_solve_label" />
+        android:id="@+id/crime_delete"
+        android:text="@string/delete" />
 </LinearLayout>

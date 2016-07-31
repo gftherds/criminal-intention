@@ -1,8 +1,10 @@
 package com.augmentis.ayp.crimin;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
 import java.util.UUID;
 
 /**
@@ -13,9 +15,6 @@ public class Crime {
     private String title;
     private Date crimeDate;
     private boolean solve;
-
-
-
 
 
     public Crime(){
@@ -50,6 +49,7 @@ public class Crime {
 
 
     }
+
 
     public boolean isSolve() {
         return solve;

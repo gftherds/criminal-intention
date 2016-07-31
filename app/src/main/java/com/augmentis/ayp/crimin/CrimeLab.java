@@ -26,20 +26,9 @@ public class CrimeLab {
 
 
 
-    private CrimeLab(){
+    private CrimeLab() {
         crimeList = new ArrayList<>();
-
-
-
-        for(int i = 1;i <= 100 ; i++){
-            Crime crime = new Crime();
-            crime.setTitle("Crime # " + i);
-            crime.setSolve(i % 2 == 0 );
-
-            crimeList.add(crime);
-        }
     }
-
 
 
 
@@ -52,6 +41,11 @@ public class CrimeLab {
         }
         return null;
     }
+
+
+
+
+
 
     public int getCrimePositionById(UUID uuid) {
         int size = crimeList.size();
@@ -93,5 +87,7 @@ public class CrimeLab {
     }
 
 
-
+    public void addCrime(Crime crime) {
+        crimeList.add(crime);
+    }
 }
