@@ -1,10 +1,6 @@
-package com.augmentis.ayp.crimin;
+package com.augmentis.ayp.crimin.model;
 
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Timer;
 import java.util.UUID;
 
 /**
@@ -18,10 +14,14 @@ public class Crime {
 
 
     public Crime(){
+        this(UUID.randomUUID());
+
+
+    }
+
+    public Crime(UUID uuid){
+        this.id = uuid;
         crimeDate = new Date();
-        id = UUID.randomUUID();
-
-
     }
 
     public UUID getId() {

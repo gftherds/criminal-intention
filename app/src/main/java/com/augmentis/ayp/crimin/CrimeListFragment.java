@@ -1,6 +1,5 @@
 package com.augmentis.ayp.crimin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -15,8 +14,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+
+import com.augmentis.ayp.crimin.model.Crime;
+import com.augmentis.ayp.crimin.model.CrimeCursorWrapper;
+import com.augmentis.ayp.crimin.model.CrimeDbSchema;
+import com.augmentis.ayp.crimin.model.CrimeLab;
 
 import java.util.List;
 
@@ -60,10 +66,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
-
         inflater.inflate(R.menu.crime_list_menu, menu);
-
 
         MenuItem menuItem = menu.findItem(R.id.menu_item_show_subtitle);
 
@@ -80,8 +83,6 @@ public class CrimeListFragment extends Fragment {
             case R.id.menu_item_new_crime :
 
                 Crime crime = new Crime();
-
-
                 CrimeLab.getInstance(getActivity()).addCrime(crime); // TODO : Add addCrime() to Crime
                 Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
                 startActivity(intent);
@@ -114,6 +115,7 @@ public class CrimeListFragment extends Fragment {
             _adapter = new CrimeAdapter(crimes);
             _crimeRecyelerView.setAdapter(_adapter);
         } else {
+            _adapter.setCrimes(crimeLab.getCrime());
           _adapter.notifyDataSetChanged();
           //  if(crimePos != null) {
               //  for (Integer pos : crimePos){
@@ -154,7 +156,7 @@ public class CrimeListFragment extends Fragment {
        int _position;
 
 
-        public CrimeHolder(View itemView) {
+        public CrimeHolder(final View itemView) {
             super(itemView);
 
 
@@ -163,6 +165,15 @@ public class CrimeListFragment extends Fragment {
                     itemView.findViewById(R.id.list_item_crime_title_text_view);
             solvedcheckbox = (CheckBox)
                     itemView.findViewById(R.id.list_item_crime_solved_check_box);
+                    solvedcheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+
+
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                _crime.setSolve(isChecked);
+                            CrimeLab.getInstance(getActivity()).updateCrime(_crime);
+                        }
+                    });
             dateTextView =(TextView)
                     itemView.findViewById(R.id.list_item_crime_date_text_view);
 
@@ -192,6 +203,10 @@ public class CrimeListFragment extends Fragment {
         private int viewCreatingCount;
         public CrimeAdapter(List<Crime> crimes){
 
+            _crimes = crimes;
+        }
+
+        private void setCrimes(List<Crime> crimes) {
             _crimes = crimes;
         }
 

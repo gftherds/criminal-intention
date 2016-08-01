@@ -1,4 +1,4 @@
-package com.augmentis.ayp.crimin;
+package com.augmentis.ayp.crimin.model;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 
+import com.augmentis.ayp.crimin.R;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -22,7 +24,8 @@ import java.util.GregorianCalendar;
 public class DatePickerFragment extends DialogFragment implements DialogInterface.OnClickListener {
 
 
-    protected static String EXTRA_DATE;
+
+    public static String EXTRA_DATE = "Date";
 
     public static DatePickerFragment newInstance(Date date) {
 
@@ -51,7 +54,7 @@ public class DatePickerFragment extends DialogFragment implements DialogInterfac
         int month = calendar.get(Calendar.MONTH);
         int dayofMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        AlertDialog.Builder builder =new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date, null);
         _datePicker = (DatePicker) v.findViewById (R.id.date_picker_in_dialog);
         _datePicker.init(year, month, dayofMonth, null);
