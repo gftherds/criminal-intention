@@ -11,7 +11,16 @@ public class Crime {
     private String title;
     private Date crimeDate;
     private boolean solve;
+    private String suspect;
 
+
+    public String getSusspect() {
+        return suspect;
+    }
+
+    public void setSusspect(String susspect) {
+        this.suspect = susspect;
+    }
 
     public Crime(){
         this(UUID.randomUUID());
@@ -64,9 +73,9 @@ public class Crime {
         StringBuilder builder = new StringBuilder();
         builder.append("UUID=").append(id);
         builder.append(",Title=").append(title);
-        builder.append(", Crime Date=").append(crimeDate);
+        builder.append(",Crime Date=").append(crimeDate);
         builder.append(",Solved=").append(solve);
-
+        builder.append(",Suspect=").append(suspect);
         return builder.toString() ;
     }
 }
