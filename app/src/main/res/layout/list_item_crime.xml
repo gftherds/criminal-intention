@@ -5,8 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="10dp"
-    style="?android:listSeparatorTextViewStyle"
+
+
     >
+    <ImageView
+        android:id="@+id/choose_picture"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerInside"
+        android:background="@android:color/darker_gray"
+        android:layout_alignRight="@+id/list_item_crime_title_text_view"
+        android:layout_alignEnd="@+id/list_item_crime_title_text_view"
+        android:layout_alignBottom="@+id/list_item_crime_date_text_view" />
+
+
     <CheckBox
         android:id="@+id/list_item_crime_solved_check_box"
         android:layout_width="wrap_content"
@@ -36,7 +48,6 @@
         android:padding="12dp"
         tools:text="Crime date"
         android:layout_below="@+id/list_item_crime_solved_check_box"
-        android:layout_toRightOf="@+id/list_item_crime_solved_check_box"
-        android:layout_toEndOf="@+id/list_item_crime_solved_check_box" />
+        android:layout_toRightOf="@+id/list_item_crime_solved_check_box" />
 
 </RelativeLayout>

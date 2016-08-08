@@ -51,7 +51,7 @@ public class CrimeBaseHelper extends SQLiteOpenHelper {
 
         Log.d(TAG , "Running ");
         //1. rename table to _(oldversion)
-        db.execSQL("alter table " + CrimeTable.NAME + " rename to " + CrimeTable.NAME+ "_" + oldVersion);
+        db.execSQL("alter table " + CrimeTable.NAME + " rename to " + CrimeTable.NAME + "_" + oldVersion);
         //2. drop table
         db.execSQL("drop table if exists " + CrimeTable.NAME);
 

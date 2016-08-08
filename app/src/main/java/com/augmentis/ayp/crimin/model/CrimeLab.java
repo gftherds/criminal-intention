@@ -4,8 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -86,7 +88,8 @@ public class CrimeLab {
 
 
     public List<Crime> getCrime() {
-       List<Crime> crimes = new ArrayList<>();
+      List<Crime> crimes = new ArrayList<>();
+
 
        CrimeCursorWrapper cursor =  queryCrimes(null,null);
 
@@ -129,6 +132,17 @@ public class CrimeLab {
 
         database.update(CrimeTable.NAME, contentValues, CrimeTable.Cols.UUID + " = ? ", new String[]{ uuidStr });
     }
+
+    public File getPhotofile(Crime crime){
+    File externalFilesDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+    if(externalFilesDir == null ){
+        return null;
+    }
+    return  new File (externalFilesDir, crime.getPhotoFilename());
+}
+
+
 
 
     }

@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
 <android.support.v7.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/crime_recycler_view"
@@ -6,3 +13,16 @@
     android:layout_height="match_parent">
 
 </android.support.v7.widget.RecyclerView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_to_list"
+        android:gravity="center"
+
+        android:id="@+id/add_to_list"
+        android:textSize="40dp"
+        android:layout_centerInParent="true" />
+
+</RelativeLayout>

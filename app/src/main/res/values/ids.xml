@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="compoundButton1" type="id">true</item>
+    <item name="image_dialog_root" type="id">Dialogpicture</item>
+    <item name="your_image" type="id">image</item>
 </resources>

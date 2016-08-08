@@ -15,11 +15,18 @@ import com.augmentis.ayp.crimin.model.CrimeLab;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends SingleFragmentActivity {
+public class CrimePagerActivity extends SingleFragmentActivity implements CrimeFragment.Callbacks {
 
+    @Override
+    public int getLayoutResId() {
 
+        return R.layout.activity_crime;
+    }
 
     private UUID _crimeId;
+
+
+
 
     @Override
     protected Fragment onCreateFragment() {
@@ -38,6 +45,13 @@ public class CrimePagerActivity extends SingleFragmentActivity {
 
 
         return intent;
+
+    }
+
+    @Override
+    public void onCrimeUpdated(Crime crime) {
+        //TODO I will see what I can do here.
+
 
     }
 }

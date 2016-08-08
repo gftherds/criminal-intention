@@ -1,5 +1,7 @@
 package com.augmentis.ayp.crimin.model;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -14,11 +16,14 @@ public class Crime {
     private String suspect;
 
 
-    public String getSusspect() {
+
+    public String getSusspect()
+    {
         return suspect;
     }
 
     public void setSusspect(String susspect) {
+
         this.suspect = susspect;
     }
 
@@ -34,22 +39,28 @@ public class Crime {
     }
 
     public UUID getId() {
+
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(UUID id)
+    {
         this.id = id;
     }
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(String title)
+    {
         this.title = title;
     }
 
-    public Date getCrimeDate() {
+    public Date getCrimeDate()
+
+    {
         return crimeDate;
     }
 
@@ -59,13 +70,22 @@ public class Crime {
 
     }
 
+    public boolean isSolve()
 
-    public boolean isSolve() {
+    {
         return solve;
     }
 
-    public void setSolve(boolean solve) {
+    public void setSolve(boolean solve)
+    {
         this.solve = solve;
+    }
+
+
+
+    public String getPhotoFilename()
+    {
+        return "IMG_" + getId().toString()+ ".jpg";
     }
 
     @Override
