@@ -54,12 +54,15 @@ public class CrimeListFragment extends Fragment {
 
     public interface  Callbacks{
         void onCrimeSelected(Crime crime);
+        void onOpenSelectFirst();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         callbacks = (Callbacks) context;
+        callbacks.onOpenSelectFirst();
+
     }
 
     @Override
